@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dinner Date Planner ❤️</title>
+    <title>Happy 16th Pillu! ❤️</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -20,163 +20,204 @@
         }
         .container {
             background-color: white;
-            padding: 30px;
+            padding: 35px 25px;
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            max-width: 500px;
+            max-width: 450px;
             width: 100%;
             text-align: center;
-        }
-        h1 { color: #ff6b8b; margin-bottom: 5px; }
-        .summary-box {
-            background-color: #fff0f3;
-            border: 2px dashed #ffb3c1;
-            border-radius: 12px;
-            padding: 15px;
-            margin: 20px 0;
-            min-height: 40px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #ff477e;
-        }
-        .question-section { margin-bottom: 25px; }
-        h3 { margin-bottom: 10px; color: #6c757d; }
-        .options {
+            min-height: 250px;
             display: flex;
-            gap: 10px;
+            flex-direction: column;
             justify-content: center;
-            flex-wrap: wrap;
+            align-items: center;
         }
-        button {
-            background-color: #f8f9fa;
-            border: 2px solid #dee2e6;
-            border-radius: 20px;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.2s ease;
-        }
-        button:hover {
-            border-color: #ff6b8b;
-            background-color: #fff0f3;
-        }
-        button.selected {
-            background-color: #ff6b8b;
-            color: white;
-            border-color: #ff6b8b;
-        }
-        .submit-btn {
+        .page { display: none; width: 100%; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        
+        h2 { color: #ff6b8b; margin-top: 0; font-size: 1.5rem; line-height: 1.4; }
+        p { font-size: 1.1rem; line-height: 1.5; color: #5a5a5a; }
+        
+        .btn {
             background-color: #ff477e;
             color: white;
             border: none;
-            padding: 12px 30px;
+            padding: 12px 28px;
             border-radius: 25px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: bold;
-            margin-top: 10px;
-            display: none;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+            box-shadow: 0 4px 10px rgba(255,71,126,0.2);
         }
-        .submit-btn:hover { background-color: #ff1f5a; }
-        #final-message {
-            font-size: 1.4rem;
+        .btn:hover { background-color: #ff1f5a; }
+        
+        /* Step 3 Cuisine Styles */
+        .cuisine-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 25px 0 15px 0;
+            width: 100%;
+        }
+        .cuisine-btn {
+            background: #fff0f3;
+            border: 2px solid #ffb3c1;
+            border-radius: 15px;
+            padding: 15px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-weight: 600;
+            color: #d93856;
+            transition: all 0.2s;
+        }
+        .cuisine-btn:hover { background: #ffdde4; transform: translateY(-2px); }
+        .icon { font-size: 1.6rem; }
+        .note { font-size: 0.85rem; color: #888; font-style: italic; line-height: 1.3; margin-top: 15px; }
+        
+        /* Step 4 Cart Styles */
+        .cart {
+            border: 2px dashed #ffb3c1;
+            border-radius: 15px;
+            padding: 15px;
+            background: #fffcfd;
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ffe3e8;
+            font-size: 1.05rem;
+        }
+        .cart-item.comp { color: #ff477e; font-weight: bold; border-bottom: none; }
+        .cart-label { font-size: 0.9rem; color: #aaa; text-transform: uppercase; margin-top: 10px; }
+        
+        /* Step 5 Payment Styles */
+        .input-box {
+            width: 80%;
+            padding: 12px;
+            font-size: 1.2rem;
+            border: 2px solid #ffb3c1;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 15px;
+            outline: none;
             color: #ff477e;
             font-weight: bold;
-            margin-top: 20px;
-            display: none;
-            animation: pop 0.3s ease;
         }
-        @keyframes pop {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        .input-box:focus { border-color: #ff477e; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Dinner Date Planner ✨</h1>
-    <p>Help me plan our perfect night out!</p>
-    
-    <!-- Top Summary Box -->
-    <div class="summary-box" id="summary">
-        Your current plan: Thinking... 🤔
+    <!-- 1) First Look -->
+    <div id="step1" class="page active">
+        <h2>Hi Pillu. You know what's today right? Happyy 16th baby. ❤️</h2>
+        <p>And yes, I remember and I did this all myself, so go ahead with this same smile and enthusiasm.</p>
+        <button class="btn" onclick="nextStep(2)">As you command my lord</button>
     </div>
 
-    <!-- Question 1 -->
-    <div class="question-section">
-        <h3>1. What are we craving?</h3>
-        <div class="options">
-            <button onclick="selectOption('cuisine', 'Italian 🍝')">Italian 🍝</button>
-            <button onclick="selectOption('cuisine', 'Sushi 🍣')">Sushi 🍣</button>
-            <button onclick="selectOption('cuisine', 'Tacos 🌮')">Tacos 🌮</button>
-            <button onclick="selectOption('cuisine', 'Burgers 🍔')">Burgers 🍔</button>
+    <!-- 2) Second Look -->
+    <div id="step2" class="page">
+        <h2>You know I'm not the expert on planning things... 🤔</h2>
+        <p>So, would you like to eat out today?</p>
+        <button class="btn" onclick="nextStep(3)">Qubool Hai</button>
+    </div>
+
+    <!-- 3) Third Look -->
+    <div id="step3" class="page">
+        <h2>You have a few options my lady... And you can select any one... because we're on a diet 🤭</h2>
+        <div class="cuisine-options">
+            <button class="cuisine-btn" onclick="selectCuisine('Pizza 🍕')">
+                <span class="icon">🍕</span> Pizza
+            </button>
+            <button class="cuisine-btn" onclick="selectCuisine('Asian 🍜')">
+                <span class="icon">🍜</span> Asian
+            </button>
+            <button class="cuisine-btn" onclick="selectCuisine('All-in-one 🍱')">
+                <span class="icon">🍱</span> I need all options in one place 😤
+            </button>
         </div>
+        <p class="note"><strong>Note:</strong> Pizza and Asian are exclusive cuisines, demanding a lil bit of everything may lead to non-exclusive tastes</p>
     </div>
 
-    <!-- Question 2 -->
-    <div class="question-section">
-        <h3>2. What's the vibe?</h3>
-        <div class="options">
-            <button onclick="selectOption('vibe', 'Fancy Dress-up ✨')">Fancy Dress-up ✨</button>
-            <button onclick="selectOption('vibe', 'Cozy & Casual 🍕')">Cozy & Casual 🍕</button>
-            <button onclick="selectOption('vibe', 'Rooftop View 🌆')">Rooftop View 🌆</button>
+    <!-- 4) Fourth Look (Checkout Cart) -->
+    <div id="step4" class="page">
+        <h2>Checkout Cart 🛒</h2>
+        <div class="cart">
+            <div class="cart-item">
+                <span id="chosen-cuisine">Cuisine</span>
+                <span>Qty: 1</span>
+            </div>
+            <div class="cart-label">Complementary</div>
+            <div class="cart-item comp">
+                <span>🍦 Meridian Icecream</span>
+                <span>Qty: 1</span>
+            </div>
         </div>
+        <button class="btn" onclick="nextStep(5)">Continue to Payment page</button>
     </div>
 
-    <!-- Question 3 -->
-    <div class="question-section">
-        <h3>3. Room for dessert?</h3>
-        <div class="options">
-            <button onclick="selectOption('dessert', 'Ice Cream 🍦')">Ice Cream 🍦</button>
-            <button onclick="selectOption('dessert', 'Molten Lava Cake 🍫')">Lava Cake 🍫</button>
-            <button onclick="selectOption('dessert', 'Just Cocktails 🍸')">Just Drinks 🍸</button>
-        </div>
+    <!-- 5) Fifth Look (Payment) -->
+    <div id="step5" class="page">
+        <h2>Payment Mode: Kisses 💋</h2>
+        <p>Let your hone wale Pati Parmeshwar (PP) enter the number of kisses as payment:</p>
+        <input type="number" id="kiss-count" class="input-box" placeholder="Enter amount..." min="1">
+        <br>
+        <button class="btn" onclick="nextStep(6)">Let your PP confirm that the payment is received</button>
     </div>
 
-    <button class="submit-btn" id="submit" onclick="showFinalMessage()">Lock it in! ❤️</button>
-    <div id="final-message"></div>
+    <!-- 6) Final Look -->
+    <div id="step6" class="page">
+        <h2>Order Confirmed! 😈</h2>
+        <p style="text-align: left; white-space: pre-line;">
+            I hope tujhe ye cute gesture accha laga and I'm at least half way making up to you for the last week. 
+            
+            I won't worry about the other half because till the time I'm done having dessert, you'll probably forget about the last week because you'll be busy shivering your legs. 
+            
+            You didn't misread. Meridian icecream was your final desert, not mine 😈
+        </p>
+    </div>
 </div>
 
 <script>
-    let choices = { cuisine: '', vibe: '', dessert: '' };
+    function nextStep(stepNumber) {
+        // Hide all screens
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(page => page.classList.remove('active'));
+        
+        // Validation check for payment screen input entry
+        if (stepNumber === 6) {
+            const kissInput = document.getElementById('kiss-count').value;
+            if (!kissInput || kissInput <= 0) {
+                alert("PP needs his kisses payment to proceed! 😉");
+                document.getElementById('step5').classList.add('active');
+                return;
+            }
+        }
 
-    function selectOption(category, value) {
-        choices[category] = value;
-        
-        // Update button visual states
-        const buttons = event.target.parentElement.querySelectorAll('button');
-        buttons.forEach(btn => btn.classList.remove('selected'));
-        event.target.classList.add('selected');
-        
-        // Update live summary
-        updateSummary();
+        // Show the desired screen
+        document.getElementById('step' + stepNumber).classList.add('active');
     }
 
-    function updateSummary() {
-        let text = "Your current plan: ";
-        let parts = [];
-        if(choices.cuisine) parts.push(choices.cuisine);
-        if(choices.vibe) parts.push(choices.vibe);
-        if(choices.dessert) parts.push(choices.dessert);
-        
-        if(parts.length > 0) {
-            text += parts.join(' + ');
-        } else {
-            text += "Thinking... 🤔";
-        }
-        document.getElementById('summary').innerText = text;
-
-        // Show submit button if all 3 are picked
-        if(choices.cuisine && choices.vibe && choices.dessert) {
-            document.getElementById('submit').style.display = 'inline-block';
-        }
-    }
-
-    function showFinalMessage() {
-        const msg = document.getElementById('final-message');
-        msg.innerText = `Yay! It's a date. I'm booking a ${choices.vibe} spot for ${choices.cuisine} followed by ${choices.dessert}. See you lookin' pretty at 7 PM! 🥰`;
-        msg.style.display = 'block';
-        document.getElementById('submit').style.display = 'none';
+    function selectCuisine(cuisineName) {
+        document.getElementById('chosen-cuisine').innerText = cuisineName;
+        nextStep(4);
     }
 </script>
 
