@@ -6,8 +6,6 @@
     <title>Happy 16th Pillu! ❤️</title>
     <!-- Include Google Font for elegance -->
     <link href="https://googleapis.com" rel="stylesheet">
-    <!-- Include Confetti Library -->
-    <script src="https://jsdelivr.net"></script>
     
     <style>
         :root {
@@ -73,7 +71,7 @@
             position: relative;
         }
 
-        .page { display: none; width: 100%; animation: slideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .page { display: none; width: 100%; animation: slideIn 0.4s ease-out; }
         .page.active { display: block; }
         
         .anniversary-title {
@@ -97,7 +95,7 @@
             font-weight: 600;
             cursor: pointer;
             margin-top: 20px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             box-shadow: 0 5px 15px rgba(255, 71, 126, 0.3);
             display: inline-flex;
             align-items: center;
@@ -108,7 +106,6 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(255, 71, 126, 0.4);
         }
-        .btn:active { transform: translateY(1px); }
         
         /* Cuisine Selection Cards */
         .cuisine-options {
@@ -132,12 +129,11 @@
             gap: 15px;
             font-weight: 600;
             color: #d93856;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
         }
         .cuisine-btn:hover { 
             background: linear-gradient(135deg, #ffe3e8 0%, #ffcbd5 100%); 
             transform: scale(1.02);
-            box-shadow: 0 5px 12px rgba(255, 179, 193, 0.4);
         }
         .icon { 
             font-size: 1.8rem; 
@@ -158,7 +154,6 @@
             text-align: left;
             width: 100%;
             box-sizing: border-box;
-            box-shadow: inset 0 2px 8px rgba(255,179,193,0.1);
         }
         .cart-item {
             display: flex;
@@ -183,15 +178,12 @@
             outline: none;
             color: var(--primary);
             font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-            transition: border-color 0.2s;
         }
-        .input-box:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(255,71,126,0.2); }
 
         /* Smooth Animations */
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes floatUp {
@@ -270,5 +262,20 @@
         <div class="anniversary-title">Order Confirmed! 😈</div>
         <p style="text-align: left; white-space: pre-line; font-size: 1rem; color: #4e4446;">
             I hope tujhe ye cute gesture accha laga and I'm at least half way making up to you for the last week. 
-
             
+            I won't worry about the other half because till the time I'm done having dessert, you'll probably forget about the last week because you'll be busy shivering your legs. 
+            
+            You didn't misread. Meridian icecream was your final desert, not mine 😈
+        </p>
+    </div>
+</div>
+
+<script>
+    // Generate Floating Background Hearts
+    const heartsBox = document.getElementById('heartsBox');
+    const heartSymbols = ['❤️', '💖', '💝', '💕'];
+    
+    for (let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart-particle');
+        
