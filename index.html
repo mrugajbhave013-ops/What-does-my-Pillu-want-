@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy 16th Pillu! ❤️</title>
-    <!-- Include Google Font for elegance -->
-    <link href="https://googleapis.com" rel="stylesheet">
     
     <style>
         :root {
@@ -16,7 +14,7 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background: var(--bg-gradient);
             color: #4a4a4a;
             display: flex;
@@ -57,7 +55,6 @@
             padding: 40px 30px;
             border-radius: 24px;
             box-shadow: 0 15px 35px rgba(255, 107, 139, 0.15);
-            backdrop-filter: blur(10px);
             max-width: 440px;
             width: 100%;
             text-align: center;
@@ -71,12 +68,12 @@
             position: relative;
         }
 
-        .page { display: none; width: 100%; animation: slideIn 0.4s ease-out; }
+        .page { display: none; width: 100%; }
         .page.active { display: block; }
         
         .anniversary-title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.3rem;
+            font-size: 2rem;
+            font-weight: bold;
             color: var(--primary);
             margin-top: 0;
             margin-bottom: 15px;
@@ -95,7 +92,6 @@
             font-weight: 600;
             cursor: pointer;
             margin-top: 20px;
-            transition: all 0.2s ease;
             box-shadow: 0 5px 15px rgba(255, 71, 126, 0.3);
             display: inline-flex;
             align-items: center;
@@ -103,8 +99,6 @@
         }
         .btn:hover { 
             background-color: var(--primary-hover); 
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 71, 126, 0.4);
         }
         
         /* Cuisine Selection Cards */
@@ -129,11 +123,9 @@
             gap: 15px;
             font-weight: 600;
             color: #d93856;
-            transition: all 0.2s ease;
         }
         .cuisine-btn:hover { 
             background: linear-gradient(135deg, #ffe3e8 0%, #ffcbd5 100%); 
-            transform: scale(1.02);
         }
         .icon { 
             font-size: 1.8rem; 
@@ -178,12 +170,6 @@
             outline: none;
             color: var(--primary);
             font-weight: bold;
-        }
-
-        /* Smooth Animations */
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes floatUp {
@@ -271,11 +257,22 @@
 </div>
 
 <script>
-    // Generate Floating Background Hearts
-    const heartsBox = document.getElementById('heartsBox');
-    const heartSymbols = ['❤️', '💖', '💝', '💕'];
+    // Generate Floating Background Hearts Safely
+    var containerBox = document.getElementById('heartsBox');
+    var symbolsList = ['❤️', '💖', '💝', '💕'];
     
-    for (let i = 0; i < 15; i++) {
-        const heart = document.createElement('div');
-        heart.classList.add('heart-particle');
-        
+    for (var i = 0; i < 12; i++) {
+        var heartElement = document.createElement('div');
+        heartElement.className = 'heart-particle';
+        heartElement.innerText = symbolsList[Math.floor(Math.random() * symbolsList.length)];
+        heartElement.style.left = (Math.random() * 100) + '%';
+        heartElement.style.animationDelay = (Math.random() * 5) + 's';
+        heartElement.style.fontSize = (Math.random() * 1.2 + 1) + 'rem';
+        containerBox.appendChild(heartElement);
+    }
+
+    function triggerNext(stepNumber) {
+        // Validation check for payment screen input entry
+        if (stepNumber === 6) {
+            var kissInput = document.getElementById('kiss-count').value;
+            
