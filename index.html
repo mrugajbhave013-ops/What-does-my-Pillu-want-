@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinner Date Planner ❤️</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffeef2;
+            color: #4a4a4a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 { color: #ff6b8b; margin-bottom: 5px; }
+        .summary-box {
+            background-color: #fff0f3;
+            border: 2px dashed #ffb3c1;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+            min-height: 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ff477e;
+        }
+        .question-section { margin-bottom: 25px; }
+        h3 { margin-bottom: 10px; color: #6c757d; }
+        .options {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        button {
+            background-color: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+        button:hover {
+            border-color: #ff6b8b;
+            background-color: #fff0f3;
+        }
+        button.selected {
+            background-color: #ff6b8b;
+            color: white;
+            border-color: #ff6b8b;
+        }
+        .submit-btn {
+            background-color: #ff477e;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+        }
+        .submit-btn:hover { background-color: #ff1f5a; }
+        #final-message {
+            font-size: 1.4rem;
+            color: #ff477e;
+            font-weight: bold;
+            margin-top: 20px;
+            display: none;
+            animation: pop 0.3s ease;
+        }
+        @keyframes pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Dinner Date Planner ✨</h1>
+    <p>Help me plan our perfect night out!</p>
+    
+    <!-- Top Summary Box -->
+    <div class="summary-box" id="summary">
+        Your current plan: Thinking... 🤔
+    </div>
+
+    <!-- Question 1 -->
+    <div class="question-section">
+        <h3>1. What are we craving?</h3>
+        <div class="options">
+            <button onclick="selectOption('cuisine', 'Italian 🍝')">Italian 🍝</button>
+            <button onclick="selectOption('cuisine', 'Sushi 🍣')">Sushi 🍣</button>
+            <button onclick="selectOption('cuisine', 'Tacos 🌮')">Tacos 🌮</button>
+            <button onclick="selectOption('cuisine', 'Burgers 🍔')">Burgers 🍔</button>
+        </div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="question-section">
+        <h3>2. What's the vibe?</h3>
+        <div class="options">
+            <button onclick="selectOption('vibe', 'Fancy Dress-up ✨')">Fancy Dress-up ✨</button>
+            <button onclick="selectOption('vibe', 'Cozy & Casual 🍕')">Cozy & Casual 🍕</button>
+            <button onclick="selectOption('vibe', 'Rooftop View 🌆')">Rooftop View 🌆</button>
+        </div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="question-section">
+        <h3>3. Room for dessert?</h3>
+        <div class="options">
+            <button onclick="selectOption('dessert', 'Ice Cream 🍦')">Ice Cream 🍦</button>
+            <button onclick="selectOption('dessert', 'Molten Lava Cake 🍫')">Lava Cake 🍫</button>
+            <button onclick="selectOption('dessert', 'Just Cocktails 🍸')">Just Drinks 🍸</button>
+        </div>
+    </div>
+
+    <button class="submit-btn" id="submit" onclick="showFinalMessage()">Lock it in! ❤️</button>
+    <div id="final-message"></div>
+</div>
+
+<script>
+    let choices = { cuisine: '', vibe: '', dessert: '' };
+
+    function selectOption(category, value) {
+        choices[category] = value;
+        
+        // Update button visual states
+        const buttons = event.target.parentElement.querySelectorAll('button');
+        buttons.forEach(btn => btn.classList.remove('selected'));
+        event.target.classList.add('selected');
+        
+        // Update live summary
+        updateSummary();
+    }
+
+    function updateSummary() {
+        let text = "Your current plan: ";
+        let parts = [];
+        if(choices.cuisine) parts.push(choices.cuisine);
+        if(choices.vibe) parts.push(choices.vibe);
+        if(choices.dessert) parts.push(choices.dessert);
+        
+        if(parts.length > 0) {
+            text += parts.join(' + ');
+        } else {
+            text += "Thinking... 🤔";
+        }
+        document.getElementById('summary').innerText = text;
+
+        // Show submit button if all 3 are picked
+        if(choices.cuisine && choices.vibe && choices.dessert) {
+            document.getElementById('submit').style.display = 'inline-block';
+        }
+    }
+
+    function showFinalMessage() {
+        const msg = document.getElementById('final-message');
+        msg.innerText = `Yay! It's a date. I'm booking a ${choices.vibe} spot for ${choices.cuisine} followed by ${choices.dessert}. See you lookin' pretty at 7 PM! 🥰`;
+        msg.style.display = 'block';
+        document.getElementById('submit').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
