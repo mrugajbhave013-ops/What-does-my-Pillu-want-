@@ -4,10 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy 16th Pillu! ❤️</title>
+    <!-- Include Google Font for elegance -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    <!-- Include Confetti Library -->
+    <script src="https://jsdelivr.net"></script>
+    
     <style>
+        :root {
+            --primary: #ff477e;
+            --primary-hover: #ff1f5a;
+            --bg-gradient: linear-gradient(135deg, #ffeef2 0%, #ffd6e0 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #ffeef2;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
             color: #4a4a4a;
             display: flex;
             flex-direction: column;
@@ -17,126 +29,197 @@
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
+            overflow: hidden;
+            position: relative;
         }
+
+        /* Floating Hearts Container */
+        .hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .heart-particle {
+            position: absolute;
+            bottom: -10%;
+            color: #ff6b8b;
+            font-size: 1.5rem;
+            opacity: 0.6;
+            animation: floatUp 6s linear infinite;
+        }
+
         .container {
-            background-color: white;
-            padding: 35px 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            max-width: 450px;
+            background-color: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(255, 107, 139, 0.15);
+            backdrop-filter: blur(10px);
+            max-width: 440px;
             width: 100%;
             text-align: center;
-            min-height: 250px;
+            min-height: 320px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            position: relative;
         }
-        .page { display: none; width: 100%; animation: fadeIn 0.4s ease; }
+
+        .page { display: none; width: 100%; animation: slideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .page.active { display: block; }
         
-        h2 { color: #ff6b8b; margin-top: 0; font-size: 1.5rem; line-height: 1.4; }
-        p { font-size: 1.1rem; line-height: 1.5; color: #5a5a5a; }
+        .anniversary-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.3rem;
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        h2 { color: #ff5c8a; margin-top: 0; font-size: 1.4rem; line-height: 1.5; font-weight: 600; }
+        p { font-size: 1.05rem; line-height: 1.6; color: #625c5e; }
         
         .btn {
-            background-color: #ff477e;
+            background-color: var(--primary);
             color: white;
             border: none;
-            padding: 12px 28px;
-            border-radius: 25px;
+            padding: 14px 32px;
+            border-radius: 30px;
             font-size: 1.05rem;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
             margin-top: 20px;
-            transition: background 0.2s;
-            box-shadow: 0 4px 10px rgba(255,71,126,0.2);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 71, 126, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
-        .btn:hover { background-color: #ff1f5a; }
+        .btn:hover { 
+            background-color: var(--primary-hover); 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 71, 126, 0.4);
+        }
+        .btn:active { transform: translateY(1px); }
         
-        /* Step 3 Cuisine Styles */
+        /* Cuisine Selection Cards */
         .cuisine-options {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
             margin: 25px 0 15px 0;
             width: 100%;
         }
         .cuisine-btn {
-            background: #fff0f3;
+            background: linear-gradient(135deg, #fff0f3 0%, #ffe3e8 100%);
             border: 2px solid #ffb3c1;
-            border-radius: 15px;
-            padding: 15px;
+            border-radius: 18px;
+            padding: 16px;
             font-size: 1.1rem;
             cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 12px;
+            justify-content: flex-start;
+            padding-left: 25px;
+            gap: 15px;
             font-weight: 600;
             color: #d93856;
-            transition: all 0.2s;
+            transition: all 0.25s ease;
         }
-        .cuisine-btn:hover { background: #ffdde4; transform: translateY(-2px); }
-        .icon { font-size: 1.6rem; }
-        .note { font-size: 0.85rem; color: #888; font-style: italic; line-height: 1.3; margin-top: 15px; }
+        .cuisine-btn:hover { 
+            background: linear-gradient(135deg, #ffe3e8 0%, #ffcbd5 100%); 
+            transform: scale(1.02);
+            box-shadow: 0 5px 12px rgba(255, 179, 193, 0.4);
+        }
+        .icon { 
+            font-size: 1.8rem; 
+            background: white;
+            padding: 8px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+        }
+        .note { font-size: 0.85rem; color: #928387; font-style: italic; line-height: 1.4; margin-top: 20px; border-top: 1px dashed #ffcbd5; padding-top: 12px; }
         
-        /* Step 4 Cart Styles */
+        /* Checkout Box */
         .cart {
             border: 2px dashed #ffb3c1;
-            border-radius: 15px;
-            padding: 15px;
+            border-radius: 18px;
+            padding: 20px;
             background: #fffcfd;
-            margin: 20px 0;
+            margin: 25px 0;
             text-align: left;
             width: 100%;
             box-sizing: border-box;
+            box-shadow: inset 0 2px 8px rgba(255,179,193,0.1);
         }
         .cart-item {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px solid #ffe3e8;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
+            font-weight: 600;
         }
-        .cart-item.comp { color: #ff477e; font-weight: bold; border-bottom: none; }
-        .cart-label { font-size: 0.9rem; color: #aaa; text-transform: uppercase; margin-top: 10px; }
+        .cart-item.comp { color: var(--primary); font-weight: bold; border-bottom: none; }
+        .cart-label { font-size: 0.85rem; color: #bca0a5; text-transform: uppercase; letter-spacing: 1px; margin-top: 15px; font-weight: 600; }
         
-        /* Step 5 Payment Styles */
+        /* Payment Area */
         .input-box {
-            width: 80%;
-            padding: 12px;
-            font-size: 1.2rem;
+            width: 75%;
+            padding: 14px;
+            font-size: 1.4rem;
             border: 2px solid #ffb3c1;
-            border-radius: 10px;
+            border-radius: 14px;
             text-align: center;
             margin-top: 15px;
             outline: none;
-            color: #ff477e;
+            color: var(--primary);
             font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            transition: border-color 0.2s;
         }
-        .input-box:focus { border-color: #ff477e; }
+        .input-box:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(255,71,126,0.2); }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Smooth Animations */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-110vh) translateX(50px) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
+<div class="hearts-container" id="heartsBox"></div>
+
 <div class="container">
     <!-- 1) First Look -->
     <div id="step1" class="page active">
-        <h2>Hi Pillu. You know what's today right? Happyy 16th baby. ❤️</h2>
+        <div class="anniversary-title">Happyy 16th baby ✨</div>
+        <h2>Hi Pillu. You know what's today right? ❤️</h2>
         <p>And yes, I remember and I did this all myself, so go ahead with this same smile and enthusiasm.</p>
-        <button class="btn" onclick="nextStep(2)">As you command my lord</button>
+        <button class="btn" onclick="triggerNext(2)">As you command my lord 👑</button>
     </div>
 
     <!-- 2) Second Look -->
     <div id="step2" class="page">
         <h2>You know I'm not the expert on planning things... 🤔</h2>
         <p>So, would you like to eat out today?</p>
-        <button class="btn" onclick="nextStep(3)">Qubool Hai</button>
+        <button class="btn" onclick="triggerNext(3)">Qubool Hai 💍</button>
     </div>
 
     <!-- 3) Third Look -->
@@ -170,56 +253,22 @@
                 <span>Qty: 1</span>
             </div>
         </div>
-        <button class="btn" onclick="nextStep(5)">Continue to Payment page</button>
+        <button class="btn" onclick="triggerNext(5)">Continue to Payment page 💳</button>
     </div>
 
     <!-- 5) Fifth Look (Payment) -->
     <div id="step5" class="page">
         <h2>Payment Mode: Kisses 💋</h2>
         <p>Let your hone wale Pati Parmeshwar (PP) enter the number of kisses as payment:</p>
-        <input type="number" id="kiss-count" class="input-box" placeholder="Enter amount..." min="1">
+        <input type="number" id="kiss-count" class="input-box" placeholder="💋 Kisses amount..." min="1">
         <br>
-        <button class="btn" onclick="nextStep(6)">Let your PP confirm that the payment is received</button>
+        <button class="btn" onclick="triggerNext(6)">Let your PP confirm payment 👑</button>
     </div>
 
     <!-- 6) Final Look -->
     <div id="step6" class="page">
-        <h2>Order Confirmed! 😈</h2>
-        <p style="text-align: left; white-space: pre-line;">
+        <div class="anniversary-title">Order Confirmed! 😈</div>
+        <p style="text-align: left; white-space: pre-line; font-size: 1rem; color: #4e4446;">
             I hope tujhe ye cute gesture accha laga and I'm at least half way making up to you for the last week. 
+
             
-            I won't worry about the other half because till the time I'm done having dessert, you'll probably forget about the last week because you'll be busy shivering your legs. 
-            
-            You didn't misread. Meridian icecream was your final desert, not mine 😈
-        </p>
-    </div>
-</div>
-
-<script>
-    function nextStep(stepNumber) {
-        // Hide all screens
-        const pages = document.querySelectorAll('.page');
-        pages.forEach(page => page.classList.remove('active'));
-        
-        // Validation check for payment screen input entry
-        if (stepNumber === 6) {
-            const kissInput = document.getElementById('kiss-count').value;
-            if (!kissInput || kissInput <= 0) {
-                alert("PP needs his kisses payment to proceed! 😉");
-                document.getElementById('step5').classList.add('active');
-                return;
-            }
-        }
-
-        // Show the desired screen
-        document.getElementById('step' + stepNumber).classList.add('active');
-    }
-
-    function selectCuisine(cuisineName) {
-        document.getElementById('chosen-cuisine').innerText = cuisineName;
-        nextStep(4);
-    }
-</script>
-
-</body>
-</html>
